@@ -27,4 +27,8 @@ public class CustomCharacterService {
      customCharacterRepository.save(customCharacter);
    }
 
+   public void deleteById(Long id){
+     customCharacterRepository.deleteById(id);
+   }
+
 }

@@ -23,4 +23,17 @@ public class AccountService {
         return accountRepository.findById(id).get();
     }
 
+
+    public void createAccount(Account account){
+        accountRepository.save(account);
+    } 
+
+    public void deleteById(Long id){
+        accountRepository.deleteById(id);
+    }
+
+    
+
+
 }
+

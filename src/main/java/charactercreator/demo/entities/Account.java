@@ -36,12 +36,11 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long a_id, String name, String cpf, String email, String password) {
-        this.a_id = a_id;
+    public Account( String name, String cpf, String email, String password) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
-        this.password = password;
+        setPassword(password);
     }
     
     public Long getA_id() {
@@ -94,7 +93,7 @@ public class Account {
             System.out.println("Senha original: " + password);
             System.out.println("Hash da senha: " + hashHex.toString());
 
-            this.password =  hashHex.toString();
+           this.password = hashHex.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

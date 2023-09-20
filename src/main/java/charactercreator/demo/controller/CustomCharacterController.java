@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import charactercreator.demo.entities.Account;
 import charactercreator.demo.entities.CustomCharacter;
 import charactercreator.demo.service.AccountService;
 import charactercreator.demo.service.CustomCharacterService;
@@ -46,7 +47,6 @@ public class CustomCharacterController {
     @PostMapping(value="/createCharacter/{name}/{sex}/{fk_c_id}")
     public ResponseEntity<CustomCharacter> findCharacter(@PathVariable String name, @PathVariable String sex, @PathVariable Long fk_c_id){
 
-
         
 
         try{
@@ -61,6 +61,23 @@ public class CustomCharacterController {
         }
         
     };
+
+    @DeleteMapping(value="{id}")
+    @ResponseBody
+    public  ResponseEntity<Void> deleteById(@PathVariable Long id ){
+
+
+        try{
+
+            customCharacterService.deleteById(id);
+        
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }catch(EmptyResultDataAccessException e){
+
+            throw new EmptyResultDataAccessException(e.getMessage(), 0);
+        }
+      
+    }
 
 
 
