@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import charactercreator.demo.entities.CustomCharacter;
 import charactercreator.demo.service.AccountService;
 import charactercreator.demo.service.CustomCharacterService;
+import dto.CustomCharacterDto;
 import util.staticMetods;
 
 @RestController
@@ -33,28 +34,29 @@ public class CustomCharacterController {
     private CustomCharacterService customCharacterService;
 
     @GetMapping(value="/all")
-	public ResponseEntity<List<CustomCharacter>> findAll() {
+	public ResponseEntity<List<CustomCharacterDto>> findAll() {
         List<CustomCharacter> result = customCharacterService.findAll();
-		return new ResponseEntity<List<CustomCharacter>>(result,HttpStatus.ACCEPTED);
+		return new ResponseEntity<List<CustomCharacterDto>>(CustomCharacterDto.customCharacterConverter(result) ,HttpStatus.ACCEPTED);
 	}
 
     
     @GetMapping(value="{id}")
-	public CustomCharacter findById(@PathVariable Long id) {
-		return customCharacterService.findById(id);
+	public CustomCharacterDto findById(@PathVariable Long id) {
+        CustomCharacter customCharacter = customCharacterService.findById(id);
+		return new CustomCharacterDto(customCharacter);
 	}
 
     @PostMapping(value="/createCharacter/{name}/{sex}/{fk_c_id}")
-    public ResponseEntity<CustomCharacter> findCharacter(@PathVariable String name, @PathVariable String sex, @PathVariable Long fk_c_id){
-
-        
+    public ResponseEntity<CustomCharacterDto> findCharacter(@PathVariable String name, @PathVariable String sex, @PathVariable Long fk_c_id){
 
         try{
             CustomCharacter result = staticMetods.characterGenerator(name, sex, accountService.findById(fk_c_id));  
 
             customCharacterService.save(result);
 
-            return new ResponseEntity<>(result,HttpStatus.CREATED); 
+            CustomCharacterDto customCharacterDto = new CustomCharacterDto(result);
+
+            return new ResponseEntity<>(customCharacterDto,HttpStatus.CREATED); 
         }catch(EmptyResultDataAccessException e)
         {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); 

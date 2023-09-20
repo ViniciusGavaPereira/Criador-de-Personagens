@@ -1,7 +1,6 @@
 package charactercreator.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import charactercreator.demo.entities.Account;
 import charactercreator.demo.service.AccountService;
+import dto.AccountDto;
 
 @RestController
 @RequestMapping(value = "/account")
@@ -27,28 +27,32 @@ public class AccountController {
     private AccountService accountService;
     
     @GetMapping(value="/all")
-    public ResponseEntity<List<Account>> findAll(){
+    public ResponseEntity<List<AccountDto>> findAll(){
         List<Account> list = accountService.findAll();
-        System.out.println(list);
-        return new ResponseEntity<List<Account>>(list, HttpStatus.ACCEPTED);
+
+   
+        return new ResponseEntity<List<AccountDto>>(AccountDto.accountConverter(list), HttpStatus.ACCEPTED);
     }
     
     @GetMapping(value="{id}")
-    public ResponseEntity<Account> findID(@PathVariable Long id){
+    public ResponseEntity<AccountDto> findID(@PathVariable Long id){
         Account result = accountService.findById(id);
-        System.out.println(result);
-        return new ResponseEntity<Account>(result, HttpStatus.ACCEPTED);
+
+        AccountDto accountDto = new AccountDto(result);
+        return new ResponseEntity<AccountDto>(accountDto, HttpStatus.ACCEPTED);
     }
     
 
 
     
     @PostMapping(value="{name}/{cpf}/{email}/{password}")
-    public ResponseEntity<Account> createAccount(@PathVariable String name, @PathVariable String cpf, @PathVariable String email, @PathVariable String password ){
-
+    public ResponseEntity<AccountDto> createAccount(@PathVariable String name, @PathVariable String cpf, @PathVariable String email, @PathVariable String password ){
         Account account = new Account(name, cpf, email, password);
         accountService.createAccount(account);
-        return new ResponseEntity<Account>(account, HttpStatus.CREATED);
+
+        AccountDto accountDto = new AccountDto(account);
+
+        return new ResponseEntity<AccountDto>(accountDto, HttpStatus.CREATED);
 
     }
 
