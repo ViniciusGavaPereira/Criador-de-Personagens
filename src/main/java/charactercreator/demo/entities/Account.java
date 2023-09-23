@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,7 +27,9 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long a_id;
     private String name;
+    @Column(unique=true)
     private String cpf;
+    @Column(unique=true)
     private String email;
     private String password;
     @OneToMany(targetEntity = CustomCharacter.class, cascade = CascadeType.ALL)

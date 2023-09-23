@@ -52,7 +52,6 @@ public class CustomCharacterController {
         try{
 
             Integer numberOfCustomCharacters = customCharacterService.totalCustomCharacters(fk_c_id);
-            System.out.println("ATENÇÃO::::      " + numberOfCustomCharacters);
 
             if(numberOfCustomCharacters < 3){
                 CustomCharacter result = staticMetods.characterGenerator(name, sex, accountService.findById(fk_c_id));  

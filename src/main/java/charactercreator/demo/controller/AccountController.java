@@ -1,8 +1,10 @@
 package charactercreator.demo.controller;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,13 +48,21 @@ public class AccountController {
 
     
     @PostMapping(value="{name}/{cpf}/{email}/{password}")
-    public ResponseEntity<AccountDto> createAccount(@PathVariable String name, @PathVariable String cpf, @PathVariable String email, @PathVariable String password ){
-        Account account = new Account(name, cpf, email, password);
-        accountService.createAccount(account);
+    public ResponseEntity<?> createAccount(@PathVariable String name, @PathVariable String cpf, @PathVariable String email, @PathVariable String password ){
+        
+        try{
+            Account account = new Account(name, cpf, email, password);
+            accountService.createAccount(account);
 
-        AccountDto accountDto = new AccountDto(account);
+            AccountDto accountDto = new AccountDto(account);
 
-        return new ResponseEntity<AccountDto>(accountDto, HttpStatus.CREATED);
+            return new ResponseEntity<AccountDto>(accountDto, HttpStatus.CREATED);
+
+
+        }catch(DataIntegrityViolationException  e ){
+            return ResponseEntity.badRequest().body("CPF ou E-MAIL oferecido já existe no banco de dados e não pode ser duplicado");
+        }
+
 
     }
 

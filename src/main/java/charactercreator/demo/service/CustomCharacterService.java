@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import charactercreator.demo.entities.CustomCharacter;
 import charactercreator.demo.repositories.CustomCharacterRepository;
-import dto.CustomCharacterDto;
 
 @Service
 public class CustomCharacterService {
