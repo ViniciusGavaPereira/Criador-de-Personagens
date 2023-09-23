@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import charactercreator.demo.entities.CustomCharacter;
 import charactercreator.demo.repositories.CustomCharacterRepository;
+import dto.CustomCharacterDto;
 
 @Service
 public class CustomCharacterService {
@@ -29,6 +30,12 @@ public class CustomCharacterService {
 
    public void deleteById(Long id){
      customCharacterRepository.deleteById(id);
+   }
+
+   public Integer totalCustomCharacters(Long Fk_C_Id){
+
+      List<CustomCharacter> list = customCharacterRepository.findByFKId(Fk_C_Id);
+     return list.size();
    }
 
 }

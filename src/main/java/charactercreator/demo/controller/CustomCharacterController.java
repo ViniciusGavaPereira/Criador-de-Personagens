@@ -50,13 +50,26 @@ public class CustomCharacterController {
     public ResponseEntity<CustomCharacterDto> findCharacter(@PathVariable String name, @PathVariable String sex, @PathVariable Long fk_c_id){
 
         try{
-            CustomCharacter result = staticMetods.characterGenerator(name, sex, accountService.findById(fk_c_id));  
 
-            customCharacterService.save(result);
+            Integer numberOfCustomCharacters = customCharacterService.totalCustomCharacters(fk_c_id);
+            System.out.println("ATENÇÃO::::      " + numberOfCustomCharacters);
 
-            CustomCharacterDto customCharacterDto = new CustomCharacterDto(result);
+            if(numberOfCustomCharacters < 3){
+                CustomCharacter result = staticMetods.characterGenerator(name, sex, accountService.findById(fk_c_id));  
 
-            return new ResponseEntity<>(customCharacterDto,HttpStatus.CREATED); 
+                customCharacterService.save(result);
+
+                CustomCharacterDto customCharacterDto = new CustomCharacterDto(result);
+                
+                return new ResponseEntity<>(customCharacterDto,HttpStatus.CREATED); 
+
+            }else{
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN); 
+
+            }
+
+            
+
         }catch(EmptyResultDataAccessException e)
         {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
