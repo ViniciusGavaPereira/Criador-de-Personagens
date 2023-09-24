@@ -68,8 +68,6 @@ public class staticMetods {
 
     public static CustomCharacter characterGenerator(String name, String sex,  Account account){
 
-
-
         //Chamada da API externa
         RestTemplate restTemplate = new RestTemplate();
 

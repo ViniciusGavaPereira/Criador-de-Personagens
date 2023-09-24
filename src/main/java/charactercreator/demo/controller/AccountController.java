@@ -1,6 +1,5 @@
 package charactercreator.demo.controller;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +60,9 @@ public class AccountController {
 
         }catch(DataIntegrityViolationException  e ){
             return ResponseEntity.badRequest().body("CPF ou E-MAIL oferecido já existe no banco de dados e não pode ser duplicado");
+        }catch(Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+
         }
 
 

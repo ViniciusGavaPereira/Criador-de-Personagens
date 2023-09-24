@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import charactercreator.demo.entities.Account;
 import charactercreator.demo.repositories.AccountRepository;
+import util.cpfMethods;
 
 @Service
 public class AccountService {
@@ -25,8 +26,16 @@ public class AccountService {
     }
 
 
-    public void createAccount(Account account){
-        accountRepository.save(account);
+    public void createAccount(Account account) throws Exception{
+        
+
+        if(cpfMethods.isCPF(account.getCpf()) == true){
+            accountRepository.save(account);
+        }else{
+            throw new Exception("Invalid cpf");
+        }
+
+       
     } 
 
     public void deleteById(Long id){
