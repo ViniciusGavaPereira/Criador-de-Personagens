@@ -19,6 +19,11 @@ public class CustomCharacterDto {
     public CustomCharacterDto() {
     }
 
+    public CustomCharacterDto(String name, String sex) {
+        this.name = name;
+        this.sex = sex;
+    }
+    
     
     public CustomCharacterDto(CustomCharacter customCharacter) {
         name = customCharacter.getName();
@@ -28,6 +33,10 @@ public class CustomCharacterDto {
         level = customCharacter.getLevel();
         alignments = customCharacter.getAlignments();
     }
+
+        
+
+
 
 
     public String getName() {
