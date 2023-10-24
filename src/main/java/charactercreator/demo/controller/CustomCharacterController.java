@@ -47,7 +47,41 @@ public class CustomCharacterController {
 		return new CustomCharacterDto(customCharacter);
 	}
 
-    @PostMapping(value="/createCharacter/{name}/{sex}/{fk_c_id}/race/characterClass/level")
+
+
+    @PostMapping(value="/createCharacter/v1/{name}/{sex}/{fk_c_id}")
+    public ResponseEntity<CustomCharacterDto> findCharacter(@PathVariable String name, @PathVariable String sex, @PathVariable Long fk_c_id){
+
+        try{
+
+            Integer numberOfCustomCharacters = customCharacterService.totalCustomCharacters(fk_c_id);
+
+            if(numberOfCustomCharacters < 3){
+
+                CustomCharacter result = staticMetods.characterGenerator(name, sex, accountService.findById(fk_c_id));  
+
+                customCharacterService.save(result);
+
+                CustomCharacterDto customCharacterDto = new CustomCharacterDto(result);
+                
+                return new ResponseEntity<>(customCharacterDto,HttpStatus.CREATED); 
+
+            }else{
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN); 
+
+            }
+
+            
+
+        }catch(EmptyResultDataAccessException e)
+        {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        }
+        
+    };
+
+
+    @PostMapping(value="/createCharacter/v2/{name}/{sex}/{fk_c_id}/race/characterClass/level")
     public ResponseEntity<CustomCharacterDto> findCharacter(@PathVariable String name, @PathVariable String sex, @PathVariable Long fk_c_id, @RequestParam(name = "race", required=false , defaultValue = "") String race, @RequestParam(name = "characterClass", required=false , defaultValue = "") String characterClass, @RequestParam(name="alignments",required=false, defaultValue="") String alignments, @RequestParam(name="level",required=false,defaultValue = "") int level){
 
         try{
