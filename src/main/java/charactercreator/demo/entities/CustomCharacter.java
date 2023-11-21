@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import dto.CustomCharacterDto;
+
 @Entity
 @Table(name="CustomCharacter")
 public class CustomCharacter {
@@ -30,6 +32,18 @@ public class CustomCharacter {
     
     public CustomCharacter() {
     }
+
+    public CustomCharacter(CustomCharacterDto customCharacterDto, Account account) {
+        this.name = customCharacterDto.getName();
+        this.sex = customCharacterDto.getSex();
+        this.race = customCharacterDto.getRace();
+        this.characterClass = customCharacterDto.getCharacterClass();
+        this.level = customCharacterDto.getLevel();
+        this.alignments = customCharacterDto.getAlignments();
+        this.account = account;
+    }
+
+
 
 
     public CustomCharacter( String name, String sex, String race, String characterClass, Integer level,String alignments , Account account) {
