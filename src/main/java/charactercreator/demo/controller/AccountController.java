@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 import charactercreator.demo.entities.Account;
 import charactercreator.demo.service.AccountService;
@@ -46,11 +48,11 @@ public class AccountController {
 
 
     
-    @PostMapping(value="{name}/{cpf}/{email}/{password}")
-    public ResponseEntity<?> createAccount(@PathVariable String name, @PathVariable String cpf, @PathVariable String email, @PathVariable String password ){
+    @PostMapping()
+    public ResponseEntity<?> createAccount(@RequestBody Account accountInput){
         
         try{
-            Account account = new Account(name, cpf, email, password);
+            Account account = new Account(accountInput.getName(), accountInput.getCpf(), accountInput.getEmail(), accountInput.getPassword());
             accountService.createAccount(account);
 
             AccountDto accountDto = new AccountDto(account);

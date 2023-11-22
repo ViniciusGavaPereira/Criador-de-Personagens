@@ -36,6 +36,8 @@ public class Account {
     @JoinColumn(name = "Fk_c_Id", referencedColumnName = "a_id" )
     private List<CustomCharacter> customCharacters;
 
+
+   
     public Account() {
     }
 
@@ -71,9 +73,7 @@ public class Account {
         this.email = email;
     }
 
-
-
-    public void setPassword(String password) {
+ public void setPassword(String password) {
 
          try {
             // Crie uma instância do MessageDigest com o algoritmo SHA-256
@@ -92,15 +92,20 @@ public class Account {
                 hashHex.append(hex);
             }
             
-            // Imprima a senha original e o hash
-            System.out.println("Senha original: " + password);
-            System.out.println("Hash da senha: " + hashHex.toString());
 
            this.password = hashHex.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
+
+
+
+
+    public String getPassword() {
+        return password;
+    }
+    
     
 
 
