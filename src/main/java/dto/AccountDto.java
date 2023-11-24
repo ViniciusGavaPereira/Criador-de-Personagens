@@ -8,6 +8,7 @@ import charactercreator.demo.entities.Account;
 public class AccountDto {
     private String name;
     private String cpf;
+    private String email;
 
     public AccountDto() {
     }
@@ -16,6 +17,7 @@ public class AccountDto {
     public AccountDto(Account account) {
         name = account.getName();
         cpf = account.getCpf();
+        email = account.getEmail();
     }
 
 
@@ -33,9 +35,21 @@ public class AccountDto {
         this.cpf = cpf;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    
+
     public static List<AccountDto> accountConverter(List<Account> accounts){
         return accounts.stream().map(AccountDto :: new ).collect(Collectors.toList());
     }
 
-    
+
+
 }

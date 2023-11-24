@@ -3,11 +3,15 @@ package charactercreator.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import charactercreator.demo.entities.Account;
 import charactercreator.demo.repositories.AccountRepository;
+import dto.AccountDto;
+import exception.CustomApplicationException;
 import util.cpfMethods;
+
 
 @Service
 public class AccountService {
@@ -42,7 +46,24 @@ public class AccountService {
         accountRepository.deleteById(id);
     }
 
+
+    public AccountDto update(Long id, Account accountInput){
+        
+        Account account = accountRepository.findById(id)
+            .orElseThrow(() -> new CustomApplicationException("Account not found", HttpStatus.NOT_FOUND));
+   
+
+        account.setName(accountInput.getName());
+        account.setCpf(accountInput.getCpf());
+        account.setEmail(accountInput.getEmail());
+        account.setPassword(accountInput.getPassword());
+
+        accountRepository.save(account);
+
+        return new AccountDto(account);
+
     
+    }
 
 
 }

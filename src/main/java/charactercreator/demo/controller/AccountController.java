@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import charactercreator.demo.entities.Account;
 import charactercreator.demo.service.AccountService;
 import dto.AccountDto;
+import exception.CustomApplicationException;
 
 @RestController
 @RequestMapping(value = "/account")
@@ -45,7 +47,6 @@ public class AccountController {
         return new ResponseEntity<AccountDto>(accountDto, HttpStatus.ACCEPTED);
     }
     
-
 
     
     @PostMapping()
@@ -80,6 +81,21 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }catch(EmptyResultDataAccessException e){
             throw new EmptyResultDataAccessException(e.getMessage(), 0);
+        }
+
+        
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AccountDto> changeaccount(@PathVariable long id, @RequestBody Account accountInput){
+
+        try{
+            AccountDto accountDto = accountService.update(id, accountInput);
+            return new ResponseEntity<AccountDto>(accountDto, HttpStatus.OK);
+
+        }catch(EmptyResultDataAccessException e){
+            throw new CustomApplicationException("Account not found", HttpStatus.NOT_FOUND);
+
         }
 
         

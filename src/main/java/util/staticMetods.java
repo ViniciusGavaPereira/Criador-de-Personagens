@@ -5,7 +5,6 @@ package util;
 import java.util.Arrays;
 import java.util.List;
 
-import org.hibernate.mapping.Array;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
