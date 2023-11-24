@@ -3,10 +3,14 @@ package charactercreator.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import charactercreator.demo.entities.CustomCharacter;
 import charactercreator.demo.repositories.CustomCharacterRepository;
+
+import dto.CustomCharacterDto;
+import exception.CustomApplicationException;
 
 @Service
 public class CustomCharacterService {
@@ -37,4 +41,26 @@ public class CustomCharacterService {
      return list.size();
    }
 
+
+       public CustomCharacterDto updateCustomCharacter(Long id, CustomCharacter customCharacterInput){
+        
+        CustomCharacter customCharacter = customCharacterRepository.findById(id)
+            .orElseThrow(() -> new CustomApplicationException("Custom character not found", HttpStatus.NOT_FOUND));
+   
+
+        customCharacter.setAlignments(customCharacterInput.getAlignments());
+        customCharacter.setCharacterClass(customCharacterInput.getCharacterClass());
+        customCharacter.setLevel(customCharacterInput.getLevel());
+        customCharacter.setName(customCharacterInput.getName());
+        customCharacter.setRace(customCharacterInput.getRace());
+        customCharacter.setSex(customCharacterInput.getSex());
+
+
+        customCharacterRepository.save(customCharacter);
+
+        return new CustomCharacterDto(customCharacter);
+
+    
+    }
+   
 }

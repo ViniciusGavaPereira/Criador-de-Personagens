@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,7 @@ import charactercreator.demo.entities.CustomCharacter;
 import charactercreator.demo.service.AccountService;
 import charactercreator.demo.service.CustomCharacterService;
 import dto.CustomCharacterDto;
+import exception.CustomApplicationException;
 import util.staticMetods;
 
 @RestController
@@ -114,7 +116,7 @@ public class CustomCharacterController {
         
     // };
 
-    @DeleteMapping(value="{id}")
+    @DeleteMapping(value="/{id}")
     @ResponseBody
     public  ResponseEntity<Void> deleteById(@PathVariable Long id ){
 
@@ -129,6 +131,19 @@ public class CustomCharacterController {
             throw new EmptyResultDataAccessException(e.getMessage(), 0);
         }
       
+    }
+
+
+    @PutMapping(value="/{id}")
+    public ResponseEntity<?> updateCustomCharacter(@PathVariable long id, @RequestBody CustomCharacter customCharacter){
+
+        try{
+            CustomCharacterDto customCharacterDto = customCharacterService.updateCustomCharacter(id, customCharacter);
+            return new ResponseEntity<CustomCharacterDto>(customCharacterDto,HttpStatus.OK);
+        }catch(CustomApplicationException e){
+            return ResponseEntity.badRequest().body("Custhom character not founded");
+
+        }
     }
 
 
