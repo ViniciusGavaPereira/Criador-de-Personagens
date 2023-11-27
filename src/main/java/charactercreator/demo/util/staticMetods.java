@@ -5,6 +5,7 @@ package charactercreator.demo.util;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
@@ -115,11 +116,18 @@ public class staticMetods {
         String aligmentResult = restTemplate.getForObject(aligmentUrl, String.class);
 
     
+   
+
+
         //Trata a resposta e seleciona um valor aleatório
         List<String> result = apiOrganizer(jsonParser(raceResult),jsonParser(classResult),jsonParser(aligmentResult));
 
         CustomCharacter customCharacter = new CustomCharacter(name, sex, result.get(0), result.get(1),levelCreator(),result.get(2),account);
 
+        String chatGPTResquest = "http://localhost:8080/bot/chat/" + customCharacter.toString();
+        String chatGPTResult = restTemplate.getForObject(chatGPTResquest, String.class);
+
+      //  CustomCharacter customCharacter2= new CustomCharacter(name, sex, result.get(0), result.get(1),levelCreator(),result.get(2), chatGPTResult,account);
 
         
         return customCharacter;

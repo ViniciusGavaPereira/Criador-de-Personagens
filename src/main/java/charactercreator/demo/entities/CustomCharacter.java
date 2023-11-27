@@ -26,6 +26,7 @@ public class CustomCharacter {
     private String characterClass; //API +++
     private Integer level; // Nível aleatório +++----
     private String alignments; //AI
+    private String description;
 
     @ManyToOne // Indica que esta é uma relação muitos-para-um
     @JoinColumn(name = "Fk_c_Id") // Especifica o nome da coluna da chave estrangeira
@@ -58,6 +59,20 @@ public class CustomCharacter {
         this.account = account;
     }
 
+    
+
+
+    public CustomCharacter(Long c_id, String name, String sex, String race, String characterClass, Integer level,
+            String alignments, String description, Account account) {
+        this.name = name;
+        this.sex = sex;
+        this.race = race;
+        this.characterClass = characterClass;
+        this.level = level;
+        this.alignments = alignments;
+        this.description = description;
+        this.account = account;
+    }
 
     public Long getC_id() {
         return c_id;
@@ -100,6 +115,14 @@ public class CustomCharacter {
     }
     public void setAlignments(String alignments) {
         this.alignments = alignments;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     
 
