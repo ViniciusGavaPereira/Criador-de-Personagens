@@ -54,3 +54,4 @@ Para criar um personagem aleatório para cada chamada de Api, o sistema faz a ch
 ### Delete
 
     - Deletar usuário: localhost:8080/account/{id usuário}
+
