@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+import charactercreator.demo.dto.AccountDto;
 import charactercreator.demo.entities.Account;
+import charactercreator.demo.exception.CustomApplicationException;
 import charactercreator.demo.service.AccountService;
-import dto.AccountDto;
-import exception.CustomApplicationException;
 
 @RestController
 @RequestMapping(value = "/account")

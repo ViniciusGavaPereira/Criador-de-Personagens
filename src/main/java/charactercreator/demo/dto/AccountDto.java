@@ -1,4 +1,4 @@
-package dto;
+package charactercreator.demo.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;

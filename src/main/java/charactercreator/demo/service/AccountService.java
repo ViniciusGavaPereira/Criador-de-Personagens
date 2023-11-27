@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import charactercreator.demo.dto.AccountDto;
 import charactercreator.demo.entities.Account;
+import charactercreator.demo.exception.CustomApplicationException;
 import charactercreator.demo.repositories.AccountRepository;
-import dto.AccountDto;
-import exception.CustomApplicationException;
-import util.cpfMethods;
+import charactercreator.demo.util.cpfMethods;
 
 
 @Service

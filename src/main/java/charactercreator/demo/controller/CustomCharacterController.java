@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import charactercreator.demo.dto.CustomCharacterDto;
 import charactercreator.demo.entities.CustomCharacter;
+import charactercreator.demo.exception.CustomApplicationException;
 import charactercreator.demo.service.AccountService;
 import charactercreator.demo.service.CustomCharacterService;
-import dto.CustomCharacterDto;
-import exception.CustomApplicationException;
-import util.staticMetods;
+import charactercreator.demo.util.staticMetods;
 
 @RestController
 @RequestMapping(value="/character")

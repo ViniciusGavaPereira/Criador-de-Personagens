@@ -1,4 +1,4 @@
-package exception;
+package charactercreator.demo.exception;
 
 import org.springframework.http.HttpStatus;
 

@@ -9,7 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import dto.CustomCharacterDto;
+import charactercreator.demo.dto.CustomCharacterDto;
+
 
 @Entity
 @Table(name="CustomCharacter")

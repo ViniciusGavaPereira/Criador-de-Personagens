@@ -1,4 +1,4 @@
-package util;
+package charactercreator.demo.util;
 
 import java.util.InputMismatchException;
 
