@@ -63,11 +63,11 @@ public class CustomCharacterController {
 
             if(numberOfCustomCharacters < 10){
                 
-                CustomCharacter result = (CustomCharacterGPT)staticMetods.characterGenerator(customCharacterDtoinput.getName(), customCharacterDtoinput.getSex(), accountService.findById(fk_c_id));  
+                CustomCharacter result = staticMetods.characterGenerator(customCharacterDtoinput.getName(), customCharacterDtoinput.getSex(), accountService.findById(fk_c_id));  
 
                 customCharacterService.save(result);
 
-                CustomCharacterDto customCharacterDto = new CustomCharacterDto();
+                CustomCharacterDto customCharacterDto = new CustomCharacterDto((CustomCharacterGPT)result);
                 
                 return new ResponseEntity<>(customCharacterDto,HttpStatus.CREATED); 
 

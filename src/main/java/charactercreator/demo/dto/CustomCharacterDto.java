@@ -3,7 +3,6 @@ package charactercreator.demo.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import charactercreator.demo.entities.CustomCharacter;
 import charactercreator.demo.entities.CustomCharacterGPT;
 
 public class CustomCharacterDto {
@@ -20,14 +19,6 @@ public class CustomCharacterDto {
     public CustomCharacterDto() {
     }
 
-    public CustomCharacterDto(String name, String sex) {
-        this.name = name;
-        this.sex = sex;
-    }
-
-    
-
-    
     
     public CustomCharacterDto(CustomCharacterGPT customCharacter) {
         name = customCharacter.getName();
@@ -38,11 +29,6 @@ public class CustomCharacterDto {
         alignments = customCharacter.getAlignments();
         backstory = customCharacter.getBackstory();
     }
-
-        
-
-
-
 
     public String getName() {
         return name;
