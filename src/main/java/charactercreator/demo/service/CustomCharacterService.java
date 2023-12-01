@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import charactercreator.demo.dto.CustomCharacterDto;
 import charactercreator.demo.entities.CustomCharacter;
+import charactercreator.demo.entities.CustomCharacterGPT;
 import charactercreator.demo.exception.CustomApplicationException;
 import charactercreator.demo.repositories.CustomCharacterRepository;
 
@@ -42,7 +43,7 @@ public class CustomCharacterService {
    }
 
 
-       public CustomCharacterDto updateCustomCharacter(Long id, CustomCharacter customCharacterInput){
+    public CustomCharacterDto updateCustomCharacter(Long id, CustomCharacter customCharacterInput){
         
         CustomCharacter customCharacter = customCharacterRepository.findById(id)
             .orElseThrow(() -> new CustomApplicationException("Custom character not found", HttpStatus.NOT_FOUND));
@@ -58,7 +59,7 @@ public class CustomCharacterService {
 
         customCharacterRepository.save(customCharacter);
 
-        return new CustomCharacterDto(customCharacter);
+        return new CustomCharacterDto((CustomCharacterGPT)customCharacter);
 
     
     }

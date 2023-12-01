@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import charactercreator.demo.dto.CustomCharacterDto;
 import charactercreator.demo.entities.CustomCharacter;
+import charactercreator.demo.entities.CustomCharacterGPT;
 import charactercreator.demo.exception.CustomApplicationException;
 import charactercreator.demo.service.AccountService;
 import charactercreator.demo.service.CustomCharacterService;
@@ -36,17 +37,17 @@ public class CustomCharacterController {
 	@Autowired
     private CustomCharacterService customCharacterService;
 
-    @GetMapping(value="/all")
+   /* @GetMapping(value="/all")
 	public ResponseEntity<List<CustomCharacterDto>> findAll() {
-        List<CustomCharacter> result = customCharacterService.findAll();
+        List<CustomCharacterGPT> result = customCharacterService.findAll();
 		return new ResponseEntity<List<CustomCharacterDto>>(CustomCharacterDto.customCharacterConverter(result) ,HttpStatus.ACCEPTED);
 	}
-
+ */
     
     @GetMapping(value="{id}")
 	public CustomCharacterDto findById(@PathVariable Long id) {
         CustomCharacter customCharacter = customCharacterService.findById(id);
-		return new CustomCharacterDto(customCharacter);
+		return new CustomCharacterDto((CustomCharacterGPT)customCharacter);
 	}
 
 
@@ -62,11 +63,11 @@ public class CustomCharacterController {
 
             if(numberOfCustomCharacters < 10){
                 
-                CustomCharacter result = staticMetods.characterGenerator(customCharacterDtoinput.getName(), customCharacterDtoinput.getSex(), accountService.findById(fk_c_id));  
+                CustomCharacter result = (CustomCharacterGPT)staticMetods.characterGenerator(customCharacterDtoinput.getName(), customCharacterDtoinput.getSex(), accountService.findById(fk_c_id));  
 
                 customCharacterService.save(result);
 
-                CustomCharacterDto customCharacterDto = new CustomCharacterDto(result);
+                CustomCharacterDto customCharacterDto = new CustomCharacterDto();
                 
                 return new ResponseEntity<>(customCharacterDto,HttpStatus.CREATED); 
 

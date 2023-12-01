@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import charactercreator.demo.dto.ChatGPTRequest;
 import charactercreator.demo.dto.ChatGPTResponse;
+import charactercreator.demo.entities.CustomCharacterGPT;
 
 @RestController
 @RequestMapping(value="/bot")
@@ -26,7 +27,7 @@ public class BotController {
     
     @GetMapping(value="/chat/{prompt}")
     public String chat(@PathVariable String prompt){
-        ChatGPTRequest request = new ChatGPTRequest(model, "Create a backstory for a Dungeon and Dragons character with this specificaton:" + prompt);
+        ChatGPTRequest request = new ChatGPTRequest(model, "Create a backstory for a Dungeon and Dragons character with this specificaton, without repeating the specifications, only the backstory text:" + prompt);
         ChatGPTResponse chatGPTResponse = template.postForObject(apiUrl, request, ChatGPTResponse.class);
 
         return chatGPTResponse.getChoices().get(0).getMessage().getContent();

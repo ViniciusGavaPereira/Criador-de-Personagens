@@ -12,8 +12,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
+import charactercreator.demo.dto.CustomCharacterDto;
 import charactercreator.demo.entities.Account;
 import charactercreator.demo.entities.CustomCharacter;
+import charactercreator.demo.entities.CustomCharacterGPT;
 
 
 public class staticMetods {
@@ -115,22 +117,21 @@ public class staticMetods {
         String aligmentUrl = "https://www.dnd5eapi.co/api/alignments";
         String aligmentResult = restTemplate.getForObject(aligmentUrl, String.class);
 
-    
-   
-
 
         //Trata a resposta e seleciona um valor aleatório
         List<String> result = apiOrganizer(jsonParser(raceResult),jsonParser(classResult),jsonParser(aligmentResult));
 
         CustomCharacter customCharacter = new CustomCharacter(name, sex, result.get(0), result.get(1),levelCreator(),result.get(2),account);
 
-        String chatGPTResquest = "http://localhost:8080/bot/chat/" + customCharacter.toString();
-        String chatGPTResult = restTemplate.getForObject(chatGPTResquest, String.class);
 
-      //  CustomCharacter customCharacter2= new CustomCharacter(name, sex, result.get(0), result.get(1),levelCreator(),result.get(2), chatGPTResult,account);
+        String chatGPTResquestUrl = "http://localhost:8080/bot/chat/" + customCharacter.toString();
+        String chatGPTResult = restTemplate.getForObject(chatGPTResquestUrl, String.class);
+
+
+        CustomCharacter customCharacterGPT = new CustomCharacterGPT(customCharacter ,account, chatGPTResult);
 
         
-        return customCharacter;
+        return (CustomCharacter)customCharacterGPT;
     }
 
     /*

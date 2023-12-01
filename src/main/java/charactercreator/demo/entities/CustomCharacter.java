@@ -1,10 +1,13 @@
 package charactercreator.demo.entities;
 
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -14,19 +17,21 @@ import charactercreator.demo.dto.CustomCharacterDto;
 
 @Entity
 @Table(name="CustomCharacter")
+@DiscriminatorValue("customCharacter")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class CustomCharacter {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long c_id;
-    private String name; //Dado pelo usuário ou aleatório +++----
-    private String sex; //Dado pelo usuário ou aleatório ++++----
+    private String name; 
+    private String sex; 
     private String race; //API  ++
     private String characterClass; //API +++
-    private Integer level; // Nível aleatório +++----
-    private String alignments; //AI
-    private String description;
+    private Integer level; // Random number +++----
+    private String alignments; //API
+
 
     @ManyToOne // Indica que esta é uma relação muitos-para-um
     @JoinColumn(name = "Fk_c_Id") // Especifica o nome da coluna da chave estrangeira
@@ -34,19 +39,6 @@ public class CustomCharacter {
     
     public CustomCharacter() {
     }
-
-    public CustomCharacter(CustomCharacterDto customCharacterDto, Account account) {
-        this.name = customCharacterDto.getName();
-        this.sex = customCharacterDto.getSex();
-        this.race = customCharacterDto.getRace();
-        this.characterClass = customCharacterDto.getCharacterClass();
-        this.level = customCharacterDto.getLevel();
-        this.alignments = customCharacterDto.getAlignments();
-        this.account = account;
-    }
-
-
-
 
     public CustomCharacter( String name, String sex, String race, String characterClass, Integer level,String alignments , Account account) {
 
@@ -59,20 +51,16 @@ public class CustomCharacter {
         this.account = account;
     }
 
-    
-
-
-    public CustomCharacter(Long c_id, String name, String sex, String race, String characterClass, Integer level,
-            String alignments, String description, Account account) {
-        this.name = name;
-        this.sex = sex;
-        this.race = race;
-        this.characterClass = characterClass;
-        this.level = level;
-        this.alignments = alignments;
-        this.description = description;
+    public CustomCharacter(CustomCharacterDto customCharacterDto, Account account) {
+        this.name = customCharacterDto.getName();
+        this.sex = customCharacterDto.getSex();
+        this.race = customCharacterDto.getRace();
+        this.characterClass = customCharacterDto.getCharacterClass();
+        this.level = customCharacterDto.getLevel();
+        this.alignments = customCharacterDto.getAlignments();
         this.account = account;
     }
+
 
     public Long getC_id() {
         return c_id;
@@ -117,13 +105,11 @@ public class CustomCharacter {
         this.alignments = alignments;
     }
 
-    public String getDescription() {
-        return description;
+    @Override
+    public String toString() {
+        return "name=" + name + ", sex=" + sex + ", race=" + race
+                + ", characterClass=" + characterClass + ", level=" + level + ", alignments=" + alignments;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
 
 }
