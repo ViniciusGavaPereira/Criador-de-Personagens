@@ -5,7 +5,6 @@ package charactercreator.demo.util;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
@@ -15,7 +14,6 @@ import com.google.gson.JsonSyntaxException;
 import charactercreator.demo.dto.CustomCharacterDto;
 import charactercreator.demo.entities.Account;
 import charactercreator.demo.entities.CustomCharacter;
-import charactercreator.demo.entities.CustomCharacterGPT;
 
 
 public class staticMetods {
@@ -128,10 +126,10 @@ public class staticMetods {
         String chatGPTResult = restTemplate.getForObject(chatGPTResquestUrl, String.class);
 
 
-        CustomCharacter customCharacterGPT = new CustomCharacterGPT(customCharacter ,account, chatGPTResult);
+        CustomCharacter customCharacterGPT = new CustomCharacter(new CustomCharacterDto(customCharacter) ,account, chatGPTResult);
 
         
-        return (CustomCharacter)customCharacterGPT;
+        return customCharacterGPT;
     }
 
     /*

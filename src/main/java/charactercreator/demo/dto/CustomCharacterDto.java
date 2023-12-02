@@ -3,7 +3,7 @@ package charactercreator.demo.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import charactercreator.demo.entities.CustomCharacterGPT;
+import charactercreator.demo.entities.CustomCharacter;
 
 public class CustomCharacterDto {
     
@@ -19,8 +19,8 @@ public class CustomCharacterDto {
     public CustomCharacterDto() {
     }
 
-    
-    public CustomCharacterDto(CustomCharacterGPT customCharacter) {
+
+    public CustomCharacterDto(CustomCharacter customCharacter) {
         name = customCharacter.getName();
         sex = customCharacter.getSex();
         race = customCharacter.getRace();
@@ -28,6 +28,10 @@ public class CustomCharacterDto {
         level = customCharacter.getLevel();
         alignments = customCharacter.getAlignments();
         backstory = customCharacter.getBackstory();
+    }
+
+    public CustomCharacterDto(String name2, String sex2, String race2, String characterClass2, Integer level2,
+            String alignments2) {
     }
 
     public String getName() {
@@ -74,12 +78,12 @@ public class CustomCharacterDto {
     public void setBackstory(String backstory) {
         this.backstory = backstory;
     }
-
-
-    public static List<CustomCharacterDto> customCharacterConverter(List<CustomCharacterGPT> list){
-        return list.stream().map(CustomCharacterDto::new).collect(Collectors.toList());
-    }
     
+
+    public static List<CustomCharacterDto> customCharacterConverter(List<CustomCharacter> list){
+        return list.stream().map(CustomCharacterDto :: new).collect(Collectors.toList());
+    }
+
 
 
 }

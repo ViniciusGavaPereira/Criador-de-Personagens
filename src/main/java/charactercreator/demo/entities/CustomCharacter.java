@@ -1,13 +1,12 @@
 package charactercreator.demo.entities;
 
 
-import javax.persistence.DiscriminatorValue;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,8 +16,6 @@ import charactercreator.demo.dto.CustomCharacterDto;
 
 @Entity
 @Table(name="CustomCharacter")
-@DiscriminatorValue("customCharacter")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class CustomCharacter {
 
 
@@ -31,6 +28,8 @@ public class CustomCharacter {
     private String characterClass; //API +++
     private Integer level; // Random number +++----
     private String alignments; //API
+    @Column(columnDefinition = "TEXT")
+    private String backstory;
 
 
     @ManyToOne // Indica que esta é uma relação muitos-para-um
@@ -51,7 +50,7 @@ public class CustomCharacter {
         this.account = account;
     }
 
-    public CustomCharacter(CustomCharacterDto customCharacterDto, Account account) {
+    public CustomCharacter(CustomCharacterDto customCharacterDto, Account account, String backstory) {
         this.name = customCharacterDto.getName();
         this.sex = customCharacterDto.getSex();
         this.race = customCharacterDto.getRace();
@@ -59,8 +58,8 @@ public class CustomCharacter {
         this.level = customCharacterDto.getLevel();
         this.alignments = customCharacterDto.getAlignments();
         this.account = account;
+        this.backstory = backstory;
     }
-
 
     public Long getC_id() {
         return c_id;
@@ -103,6 +102,15 @@ public class CustomCharacter {
     }
     public void setAlignments(String alignments) {
         this.alignments = alignments;
+    }
+
+
+    public String getBackstory() {
+        return backstory;
+    }
+
+    public void setBackstory(String backstory) {
+        this.backstory = backstory;
     }
 
     @Override

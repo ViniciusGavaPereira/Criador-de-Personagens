@@ -10,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 
 import charactercreator.demo.dto.ChatGPTRequest;
 import charactercreator.demo.dto.ChatGPTResponse;
-import charactercreator.demo.entities.CustomCharacterGPT;
 
 @RestController
 @RequestMapping(value="/bot")

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import charactercreator.demo.dto.CustomCharacterDto;
 import charactercreator.demo.entities.CustomCharacter;
-import charactercreator.demo.entities.CustomCharacterGPT;
 import charactercreator.demo.exception.CustomApplicationException;
 import charactercreator.demo.repositories.CustomCharacterRepository;
 
@@ -59,7 +58,7 @@ public class CustomCharacterService {
 
         customCharacterRepository.save(customCharacter);
 
-        return new CustomCharacterDto((CustomCharacterGPT)customCharacter);
+        return new CustomCharacterDto(customCharacter);
 
     
     }

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import charactercreator.demo.dto.CustomCharacterDto;
 import charactercreator.demo.entities.CustomCharacter;
-import charactercreator.demo.entities.CustomCharacterGPT;
 import charactercreator.demo.exception.CustomApplicationException;
 import charactercreator.demo.service.AccountService;
 import charactercreator.demo.service.CustomCharacterService;
@@ -37,17 +36,18 @@ public class CustomCharacterController {
 	@Autowired
     private CustomCharacterService customCharacterService;
 
-   /* @GetMapping(value="/all")
+    @GetMapping(value="/all")
 	public ResponseEntity<List<CustomCharacterDto>> findAll() {
-        List<CustomCharacterGPT> result = customCharacterService.findAll();
+        List<CustomCharacter> result = customCharacterService.findAll();
 		return new ResponseEntity<List<CustomCharacterDto>>(CustomCharacterDto.customCharacterConverter(result) ,HttpStatus.ACCEPTED);
 	}
- */
+
+  
     
     @GetMapping(value="{id}")
 	public CustomCharacterDto findById(@PathVariable Long id) {
         CustomCharacter customCharacter = customCharacterService.findById(id);
-		return new CustomCharacterDto((CustomCharacterGPT)customCharacter);
+		return new CustomCharacterDto(customCharacter);
 	}
 
 
@@ -67,7 +67,7 @@ public class CustomCharacterController {
 
                 customCharacterService.save(result);
 
-                CustomCharacterDto customCharacterDto = new CustomCharacterDto((CustomCharacterGPT)result);
+                CustomCharacterDto customCharacterDto = new CustomCharacterDto(result);
                 
                 return new ResponseEntity<>(customCharacterDto,HttpStatus.CREATED); 
 
