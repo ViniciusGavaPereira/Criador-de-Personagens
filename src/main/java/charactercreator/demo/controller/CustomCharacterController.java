@@ -58,9 +58,6 @@ public class CustomCharacterController {
 
             Integer numberOfCustomCharacters = customCharacterService.totalCustomCharacters(fk_c_id);
 
-            System.out.println("Nome: " + customCharacterDtoinput.getName());
-            System.out.println("Sexo: " + customCharacterDtoinput.getSex());
-
             if(numberOfCustomCharacters < 10){
                 
                 CustomCharacter result = staticMetods.characterGenerator(customCharacterDtoinput.getName(), customCharacterDtoinput.getSex(), accountService.findById(fk_c_id));  
